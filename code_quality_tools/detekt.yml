@@ -1,0 +1,37 @@
+autoCorrect: true
+failFast: true
+
+potential-bugs:
+  active: true
+  LateinitUsage:
+    active: false
+  UnsafeCallOnNullableType:
+    active: false
+  UnsafeCast:
+    active: false
+
+style:
+  active: true
+  WildcardImport:
+    active: false
+  MaxLineLength:
+    active: true
+    maxLineLength: 150
+
+comments:
+  active: true
+  UndocumentedPublicClass:
+    active: false
+  UndocumentedPublicFunction:
+    active: false
+
+complexity:
+  active: true
+  ComplexMethod:
+    active: false
+  ComplexCondition:
+    active: false
+  LongParameterList:
+    active: false
+  TooManyFunctions:
+    active: false

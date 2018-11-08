@@ -1,0 +1,15 @@
+apply plugin: "io.gitlab.arturbosch.detekt"
+
+detekt {
+    toolVersion = "$detekt_version"
+    input = files("$projectDir")
+    config = files("$rootDir/code_quality_tools/detekt.yml")
+    filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+    reports {
+        html {
+            enabled = true
+            destination = file("$project.buildDir/reports/detekt.html")
+        }
+    }
+    parallel = true
+}
