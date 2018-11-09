@@ -4,6 +4,7 @@
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
+        <item name="android:windowBackground">@drawable/main_background_gradient</item>
     </style>
 
     <style name="AppTheme" parent="BaseAppTheme" />

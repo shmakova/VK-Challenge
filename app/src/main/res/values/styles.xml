@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Text" parent="@android:style/Widget.TextView">
+        <item name="android:layout_gravity">left|center_vertical</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/default_text_color</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="Text15" parent="Text" />
+
+    <style name="Text12" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text14" parent="Text">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Text14.Medium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+</resources>

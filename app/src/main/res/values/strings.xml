@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">VKinder</string>
     <string name="login">Логин</string>
+    <string name="like">Лайк</string>
+    <string name="skip">Пропустить</string>
+    <string name="avatar">Аватарка</string>
+    <string name="photo">Фотография</string>
 </resources>
