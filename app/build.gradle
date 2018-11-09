@@ -13,7 +13,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        buildConfigField "String", "API_BASE_URL", "\"https://api.vk.com\""
+        buildConfigField "String", "API_BASE_URL", "\"https://api.vk.com/method/\""
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 

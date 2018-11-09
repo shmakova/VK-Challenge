@@ -13,7 +13,7 @@ abstract class BasePresenter<V : Any>(private val viewClass: Class<V>) {
     private var view: V? = null
 
     @CallSuper
-    protected open fun bindView(view: V) {
+    open fun bindView(view: V) {
         val previousView = this.view
 
         if (previousView != null) {
