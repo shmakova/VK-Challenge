@@ -7,12 +7,11 @@
     android:clipToPadding="false"
     tools:context=".presentation.main.MainActivity">
 
-    <ru.shmakova.vk.presentation.card.ContentCardView
-        android:id="@+id/card"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/news_feed_stack_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="64dp"
-        android:background="@drawable/bg_card_elevation16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

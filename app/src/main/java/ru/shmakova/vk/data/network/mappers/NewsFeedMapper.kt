@@ -5,6 +5,7 @@ import ru.shmakova.vk.domain.models.Attachment
 import ru.shmakova.vk.domain.models.NewsFeed
 import ru.shmakova.vk.domain.models.NewsFeedItem
 import ru.shmakova.vk.domain.models.Profile
+import java.util.*
 
 fun NewsFeedModel.toNewsFeed(): NewsFeed {
     val newsFeedItems = mutableListOf<NewsFeedItem>()
@@ -38,12 +39,12 @@ fun NewsFeedModel.toNewsFeed(): NewsFeed {
                 attachments.add(Attachment(type = it.type, url = url))
             }
         }
-        val profile = profileMap[it.sourceId]
+        val profile = profileMap[Math.abs(it.sourceId)]
         if (profile != null) {
             newsFeedItems.add(
                 NewsFeedItem(
                     profile = profile,
-                    date = it.date,
+                    date = Date(it.date * 1000L),
                     text = it.text,
                     attachments = attachments
                 )

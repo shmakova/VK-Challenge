@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">VKinder</string>
-    <string name="login">Логин</string>
+    <string name="login_button_text">Логин</string>
     <string name="like">Лайк</string>
     <string name="skip">Пропустить</string>
     <string name="avatar">Аватарка</string>
     <string name="photo">Фотография</string>
+    <string name="news_card_date">%1$s в %2$s</string>
 </resources>
