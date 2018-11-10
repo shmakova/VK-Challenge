@@ -3,7 +3,7 @@ package ru.shmakova.vk.presentation.main
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
-import android.widget.Button
+import android.widget.ImageView
 import dagger.android.AndroidInjection
 import ru.shmakova.vk.R
 import ru.shmakova.vk.presentation.news.NewsFeedAdapter
@@ -18,8 +18,8 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
 
     private lateinit var newsFeedStackView: RecyclerView
-    private lateinit var likeButton: Button
-    private lateinit var skipButton: Button
+    private lateinit var likeButton: ImageView
+    private lateinit var skipButton: ImageView
     private val adapter = NewsFeedAdapter()
 
     private val swipableTouchHelperCallback = SwipeableTouchHelperCallback(this)
@@ -32,6 +32,14 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         newsFeedStackView = findViewById(R.id.news_feed_stack_view)
+        likeButton = findViewById(R.id.like_button)
+        skipButton = findViewById(R.id.skip_button)
+        likeButton.setOnClickListener {
+            adapter.removeTopItem()
+        }
+        skipButton.setOnClickListener {
+            adapter.removeTopItem()
+        }
         val layoutManager = SwipeableLayoutManager()
         layoutManager.setAngle(10)
             .setAnimationDuratuion(300)

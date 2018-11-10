@@ -33,7 +33,7 @@ class NewsFeedAdapter : RecyclerView.Adapter<NewsViewHolder>() {
 
     fun removeTopItem() {
         items.removeAt(0)
-        notifyItemRemoved(0)
+        notifyDataSetChanged()
     }
 }
 
