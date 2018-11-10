@@ -1,6 +1,6 @@
 package ru.shmakova.vk.presentation.main
 
-import ru.shmakova.vk.data.network.models.NewsFeed
+import ru.shmakova.vk.domain.models.NewsFeed
 
 data class MainViewState(
     val error: String? = null,

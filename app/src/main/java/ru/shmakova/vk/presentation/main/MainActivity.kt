@@ -26,12 +26,13 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun render(state: MainViewState) {
         Timber.e("Render state: %s", state)
         if (state.newsFeed != null) {
-            val news = state.newsFeed.response.items.first()
-            val profile = state.newsFeed.response.profiles.first()
-            contentCardView.setAvatar(profile.photo)
-            contentCardView.setName("${profile.firstName} ${profile.lastName}")
-            contentCardView.setDate("${news.date}")
-            contentCardView.setText(news.text)
+            val newsItem = state.newsFeed.items.first()
+            val profile = newsItem.profile
+            contentCardView.setAvatar(profile.avatar)
+            contentCardView.setName(profile.name)
+            contentCardView.setDate("${newsItem.date}")
+            contentCardView.setPhoto(newsItem.attachments.first().url)
+            contentCardView.setText(newsItem.text)
         }
     }
 

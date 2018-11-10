@@ -1,6 +1,6 @@
 package ru.shmakova.vk.domain.interactors
 
-import ru.shmakova.vk.data.network.models.NewsFeed
+import ru.shmakova.vk.domain.models.NewsFeed
 
 sealed class PartialMainViewState {
     object LoadingState : PartialMainViewState()

@@ -4,6 +4,7 @@ import com.vk.sdk.VKAccessToken
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import ru.shmakova.vk.data.network.VkApiService
+import ru.shmakova.vk.data.network.mappers.toNewsFeed
 import javax.inject.Inject
 
 class MainInteractor @Inject constructor(
@@ -12,6 +13,7 @@ class MainInteractor @Inject constructor(
     fun getNewsFeed(): Observable<PartialMainViewState> {
         return apiService.getDiscoverForContestant(token = VKAccessToken.currentToken().accessToken)
             .toObservable()
+            .map { it -> it.toNewsFeed() }
             .subscribeOn(Schedulers.io())
             .map<PartialMainViewState> { PartialMainViewState.NewsFeedState(it) }
             .startWith(PartialMainViewState.LoadingState)
