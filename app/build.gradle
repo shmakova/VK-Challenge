@@ -92,7 +92,8 @@ dependencies {
 
     // Tinder swipe
     //implementation 'com.lorentzos.swipecards:library:1.0.9@aar'
-    implementation "com.yuyakaido.android:card-stack-view:2.0.0"
+    //implementation "com.yuyakaido.android:card-stack-view:2.0.0"
+    implementation 'com.github.nihad92:SwipeableCards:1.0.19'
 
     // Debug tools
     debugImplementation 'com.facebook.stetho:stetho:1.5.0'

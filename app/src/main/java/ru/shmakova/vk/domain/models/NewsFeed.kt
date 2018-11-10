@@ -4,7 +4,7 @@ import java.util.*
 
 data class NewsFeed(
     val nextFrom: String,
-    val items: List<NewsFeedItem>
+    val items: MutableList<NewsFeedItem>
 )
 
 data class NewsFeedItem(

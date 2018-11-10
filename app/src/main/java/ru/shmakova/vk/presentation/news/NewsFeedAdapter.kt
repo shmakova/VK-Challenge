@@ -8,7 +8,7 @@ import ru.shmakova.vk.R
 import ru.shmakova.vk.domain.models.NewsFeedItem
 
 class NewsFeedAdapter : RecyclerView.Adapter<NewsViewHolder>() {
-    private var items: List<NewsFeedItem> = emptyList()
+    private var items: MutableList<NewsFeedItem> = mutableListOf()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,8 +27,13 @@ class NewsFeedAdapter : RecyclerView.Adapter<NewsViewHolder>() {
 
     override fun getItemCount() = items.size
 
-    fun setItems(items: List<NewsFeedItem>) {
+    fun setItems(items: MutableList<NewsFeedItem>) {
         this.items = items
+    }
+
+    fun removeTopItem() {
+        items.removeAt(0)
+        notifyItemRemoved(0)
     }
 }
 
