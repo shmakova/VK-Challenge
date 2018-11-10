@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.shmakova.vk.R
-import ru.shmakova.vk.domain.models.NewsFeedItem
+import ru.shmakova.vk.domain.models.NewsFeed
 
 class NewsFeedAdapter : RecyclerView.Adapter<NewsViewHolder>() {
-    private var items: MutableList<NewsFeedItem> = mutableListOf()
+    private var newsFeed: NewsFeed = NewsFeed(nextFrom = "", items = mutableListOf())
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -22,17 +22,21 @@ class NewsFeedAdapter : RecyclerView.Adapter<NewsViewHolder>() {
     )
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        holder.newsCardView.setNewsFeedItem(items[position])
+        holder.newsCardView.setNewsFeedItem(newsFeed.items[position])
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = newsFeed.items.size
 
-    fun setItems(items: MutableList<NewsFeedItem>) {
-        this.items = items
+    fun getNextFrom() = newsFeed.nextFrom
+
+    fun appendNewsFeed(newsFeed: NewsFeed) {
+        this.newsFeed.items.addAll(newsFeed.items)
+        this.newsFeed = this.newsFeed.copy(nextFrom = newsFeed.nextFrom)
+        notifyDataSetChanged()
     }
 
     fun removeTopItem() {
-        items.removeAt(0)
+        newsFeed.items.removeAt(0)
         notifyDataSetChanged()
     }
 }

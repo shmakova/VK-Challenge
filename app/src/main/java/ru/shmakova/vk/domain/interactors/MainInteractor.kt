@@ -11,9 +11,11 @@ import javax.inject.Inject
 class MainInteractor @Inject constructor(
     private val apiService: VkApiService
 ) {
-    fun getNewsFeed(): Observable<PartialMainViewState> {
-        return apiService.getDiscoverForContestant(token = VKAccessToken.currentToken().accessToken)
-            .toObservable()
+    fun getNewsFeed(nextFrom: String): Observable<PartialMainViewState> {
+        return apiService.getDiscoverForContestant(
+            token = VKAccessToken.currentToken().accessToken,
+            startFrom = if (nextFrom.isEmpty()) null else nextFrom
+        ).toObservable()
             .map { it -> it.toNewsFeed() }
             .subscribeOn(Schedulers.io())
             .map<PartialMainViewState> { PartialMainViewState.NewsFeedState(it) }

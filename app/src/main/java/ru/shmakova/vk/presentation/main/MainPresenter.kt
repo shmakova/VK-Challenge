@@ -5,6 +5,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import ru.shmakova.vk.domain.interactors.MainInteractor
 import ru.shmakova.vk.domain.interactors.PartialMainViewState
 import ru.shmakova.vk.presentation.base.BasePresenter
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(private val mainInteractor: MainInteractor) :
@@ -16,7 +17,10 @@ class MainPresenter @Inject constructor(private val mainInteractor: MainInteract
     }
 
     private fun bindIntents() {
-        val newsFeedIntent: Observable<PartialMainViewState> = mainInteractor.getNewsFeed()
+        val newsFeedIntent: Observable<PartialMainViewState> = view().needUpdateIntent()
+            .distinctUntilChanged()
+            .doOnNext { Timber.i("Get news feed for %s", it) }
+            .flatMap { mainInteractor.getNewsFeed(it) }
 
         val allIntentsObservable = newsFeedIntent.observeOn(AndroidSchedulers.mainThread())
 

@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.widget.ImageView
 import dagger.android.AndroidInjection
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import ru.shmakova.vk.R
 import ru.shmakova.vk.presentation.news.NewsFeedAdapter
 import swipeable.com.layoutmanager.OnItemSwiped
@@ -23,6 +25,8 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
     private val adapter = NewsFeedAdapter()
 
     private val swipableTouchHelperCallback = SwipeableTouchHelperCallback(this)
+
+    private val needUpdateSubject: PublishSubject<String> = PublishSubject.create()
 
     @Inject
     lateinit var presenter: MainPresenter
@@ -51,11 +55,15 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
         newsFeedStackView.layoutManager = layoutManager
         newsFeedStackView.adapter = adapter
         presenter.bindView(this)
+        needUpdateSubject.onNext("")
     }
 
     override fun onItemSwiped() {
         Timber.e("onItemSwiped")
         adapter.removeTopItem()
+        if (adapter.itemCount < MIN_COUNT_TO_UPDATE) {
+            needUpdateSubject.onNext(adapter.getNextFrom())
+        }
     }
 
     override fun onItemSwipedRight() {
@@ -74,10 +82,14 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
         Timber.e("onItemSwipedLeft")
     }
 
+    override fun needUpdateIntent(): Observable<String> {
+        return needUpdateSubject
+    }
+
     override fun render(state: MainViewState) {
         Timber.e("Render state: %s", state)
         if (state.newsFeed != null) {
-            adapter.setItems(state.newsFeed.items)
+            adapter.appendNewsFeed(state.newsFeed)
             adapter.notifyDataSetChanged()
         }
     }
@@ -87,3 +99,5 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
         super.onDestroy()
     }
 }
+
+private const val MIN_COUNT_TO_UPDATE = 5
