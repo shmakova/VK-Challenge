@@ -22,7 +22,21 @@ class MainPresenter @Inject constructor(private val mainInteractor: MainInteract
             .doOnNext { Timber.i("Get news feed for %s", it) }
             .flatMap { mainInteractor.getNewsFeed(it) }
 
-        val allIntentsObservable = newsFeedIntent.observeOn(AndroidSchedulers.mainThread())
+        val likeIntent: Observable<PartialMainViewState> = view().likeIntent()
+            .distinctUntilChanged()
+            .doOnNext { Timber.i("Like %s", it) }
+            .flatMap { mainInteractor.like(it) }
+
+        val skipIntent: Observable<PartialMainViewState> = view().skipIntent()
+            .distinctUntilChanged()
+            .doOnNext { Timber.i("Skip %s", it) }
+            .flatMap { mainInteractor.skip(it) }
+
+        val allIntentsObservable = Observable.merge<PartialMainViewState>(
+            newsFeedIntent,
+            likeIntent,
+            skipIntent
+        ).observeOn(AndroidSchedulers.mainThread())
 
         val initialState = MainViewState()
 
@@ -52,6 +66,9 @@ class MainPresenter @Inject constructor(private val mainInteractor: MainInteract
                 error = null,
                 newsFeed = partialChanges.newsFeed
             )
+            else -> {
+                previousState
+            }
         }
     }
 }

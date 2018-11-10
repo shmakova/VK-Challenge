@@ -44,6 +44,9 @@ fun NewsFeedModel.toNewsFeed(): NewsFeed {
             newsFeedItems.add(
                 NewsFeedItem(
                     profile = profile,
+                    type = it.type,
+                    sourceId = it.sourceId,
+                    postId = it.postId,
                     date = Date(it.date * 1000L),
                     text = it.text,
                     attachments = attachments

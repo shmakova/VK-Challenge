@@ -29,6 +29,8 @@ class NewsFeedAdapter : RecyclerView.Adapter<NewsViewHolder>() {
 
     fun getNextFrom() = newsFeed.nextFrom
 
+    fun getTopItem() = newsFeed.items.firstOrNull()
+
     fun appendNewsFeed(newsFeed: NewsFeed) {
         this.newsFeed.items.addAll(newsFeed.items)
         this.newsFeed = this.newsFeed.copy(nextFrom = newsFeed.nextFrom)

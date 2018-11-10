@@ -15,6 +15,8 @@ data class NewsFeedResponse(
 
 data class NewsFeedItemResponse(
     @SerializedName("source_id") val sourceId: Long,
+    @SerializedName("post_id") val postId: Long,
+    val type: String,
     val date: Long,
     val text: String,
     val attachments: List<NewsFeedAttachment>?

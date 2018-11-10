@@ -8,6 +8,7 @@ import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import ru.shmakova.vk.R
+import ru.shmakova.vk.domain.models.NewsFeedItem
 import ru.shmakova.vk.presentation.news.NewsFeedAdapter
 import swipeable.com.layoutmanager.OnItemSwiped
 import swipeable.com.layoutmanager.SwipeableLayoutManager
@@ -27,6 +28,8 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
     private val swipableTouchHelperCallback = SwipeableTouchHelperCallback(this)
 
     private val needUpdateSubject: PublishSubject<String> = PublishSubject.create()
+    private val likeSubject: PublishSubject<NewsFeedItem> = PublishSubject.create()
+    private val skipSubject: PublishSubject<NewsFeedItem> = PublishSubject.create()
 
     @Inject
     lateinit var presenter: MainPresenter
@@ -48,7 +51,7 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
         layoutManager.setAngle(10)
             .setAnimationDuratuion(300)
             .setMaxShowCount(3)
-            .setScaleGap(0.1f)
+            .setScaleGap(0.25f)
             .setTransYGap(0)
         val itemTouchHelper = ItemTouchHelper(swipableTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(newsFeedStackView)
@@ -60,14 +63,13 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
 
     override fun onItemSwiped() {
         Timber.e("onItemSwiped")
-        adapter.removeTopItem()
-        if (adapter.itemCount < MIN_COUNT_TO_UPDATE) {
-            needUpdateSubject.onNext(adapter.getNextFrom())
-        }
     }
 
     override fun onItemSwipedRight() {
         Timber.e("onItemSwipedRight")
+        val newsFeedItem = adapter.getTopItem() ?: return
+        likeSubject.onNext(newsFeedItem)
+        handleSwipe()
     }
 
     override fun onItemSwipedDown() {
@@ -80,10 +82,21 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
 
     override fun onItemSwipedLeft() {
         Timber.e("onItemSwipedLeft")
+        val newsFeedItem = adapter.getTopItem() ?: return
+        skipSubject.onNext(newsFeedItem)
+        handleSwipe()
     }
 
     override fun needUpdateIntent(): Observable<String> {
         return needUpdateSubject
+    }
+
+    override fun skipIntent(): Observable<NewsFeedItem> {
+        return skipSubject
+    }
+
+    override fun likeIntent(): Observable<NewsFeedItem> {
+        return likeSubject
     }
 
     override fun render(state: MainViewState) {
@@ -97,6 +110,13 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
     override fun onDestroy() {
         presenter.unbindView(this)
         super.onDestroy()
+    }
+
+    private fun handleSwipe() {
+        adapter.removeTopItem()
+        if (adapter.itemCount < MIN_COUNT_TO_UPDATE) {
+            needUpdateSubject.onNext(adapter.getNextFrom())
+        }
     }
 }
 

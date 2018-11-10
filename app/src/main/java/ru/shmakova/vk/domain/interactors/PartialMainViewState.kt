@@ -8,4 +8,8 @@ sealed class PartialMainViewState {
     data class NewsFeedState(val newsFeed: NewsFeed) : PartialMainViewState()
 
     data class ErrorState(val error: String) : PartialMainViewState()
+
+    object SkipNewsSuccessState : PartialMainViewState()
+
+    object LikeNewsSuccessState : PartialMainViewState()
 }

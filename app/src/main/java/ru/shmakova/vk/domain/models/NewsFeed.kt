@@ -9,6 +9,9 @@ data class NewsFeed(
 
 data class NewsFeedItem(
     val profile: Profile,
+    val type: String,
+    val sourceId: Long,
+    val postId: Long,
     val date: Date,
     val text: String,
     val attachments: List<Attachment>
