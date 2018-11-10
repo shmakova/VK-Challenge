@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import ru.shmakova.vk.R
+import ru.shmakova.vk.domain.models.Attachment
 import ru.shmakova.vk.domain.models.NewsFeedItem
 import ru.shmakova.vk.presentation.utils.FormatUtils
 import java.util.*
@@ -41,13 +42,7 @@ class NewsCardView @JvmOverloads constructor(
         setAvatar(profile.avatar)
         setName(profile.name)
         setDate(newsItem.date)
-        val photo = newsItem.attachments.firstOrNull()
-        if (photo == null) {
-            photoView.visibility = GONE
-        } else {
-            photoView.visibility = View.VISIBLE
-            setPhoto(photo.url)
-        }
+        setAttachments(newsItem.attachments)
         setText(newsItem.text)
     }
 
@@ -70,23 +65,34 @@ class NewsCardView @JvmOverloads constructor(
         )
     }
 
-    private fun setPhoto(url: String) {
-        Glide.with(this)
-            .load(url)
-            .apply(RequestOptions.centerCropTransform())
-            .into(photoView)
+    private fun setAttachments(attachments: List<Attachment>) {
+        val photo = attachments.firstOrNull()
+        if (photo == null) {
+            photoView.visibility = GONE
+        } else {
+            photoView.visibility = View.VISIBLE
+            Glide.with(this)
+                .load(photo.url)
+                .apply(RequestOptions.centerCropTransform())
+                .into(photoView)
+        }
     }
 
     private fun setText(text: String) {
-        textView.text = text
-        textView.viewTreeObserver.addOnPreDrawListener(
-            object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    viewTreeObserver.removeOnPreDrawListener(this)
-                    val maxLines = textView.height / textView.lineHeight
-                    textView.maxLines = maxLines
-                    return true
-                }
-            })
+        if (text.isEmpty()) {
+            textView.visibility = View.GONE
+        } else {
+            textView.visibility = View.VISIBLE
+            textView.text = text
+            textView.viewTreeObserver.addOnPreDrawListener(
+                object : ViewTreeObserver.OnPreDrawListener {
+                    override fun onPreDraw(): Boolean {
+                        viewTreeObserver.removeOnPreDrawListener(this)
+                        val maxLines = textView.height / textView.lineHeight
+                        textView.maxLines = maxLines
+                        return true
+                    }
+                })
+        }
     }
 }

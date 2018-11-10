@@ -31,7 +31,7 @@ fun NewsFeedModel.toNewsFeed(): NewsFeed {
     items.forEach {
         val newsFeedAttachments = it.attachments
         val attachments = mutableListOf<Attachment>()
-        newsFeedAttachments.forEach {
+        newsFeedAttachments?.forEach {
             val sizes = it.photo?.sizes
             val xSizes = sizes?.filter { size -> size.type == "x" }
             val url = xSizes?.first()?.url

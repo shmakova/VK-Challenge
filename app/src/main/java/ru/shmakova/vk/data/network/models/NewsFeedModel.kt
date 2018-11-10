@@ -17,7 +17,7 @@ data class NewsFeedItemResponse(
     @SerializedName("source_id") val sourceId: Long,
     val date: Long,
     val text: String,
-    val attachments: List<NewsFeedAttachment>
+    val attachments: List<NewsFeedAttachment>?
 )
 
 data class NewsFeedAttachment(

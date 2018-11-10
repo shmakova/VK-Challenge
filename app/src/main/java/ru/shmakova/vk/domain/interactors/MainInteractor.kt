@@ -5,6 +5,7 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import ru.shmakova.vk.data.network.VkApiService
 import ru.shmakova.vk.data.network.mappers.toNewsFeed
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainInteractor @Inject constructor(
@@ -17,6 +18,9 @@ class MainInteractor @Inject constructor(
             .subscribeOn(Schedulers.io())
             .map<PartialMainViewState> { PartialMainViewState.NewsFeedState(it) }
             .startWith(PartialMainViewState.LoadingState)
-            .onErrorReturn { PartialMainViewState.ErrorState(it.message ?: "Unknown error") }
+            .onErrorReturn {
+                Timber.e(it)
+                PartialMainViewState.ErrorState(it.message ?: "Unknown error")
+            }
     }
 }
