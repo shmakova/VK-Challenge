@@ -42,10 +42,10 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
         likeButton = findViewById(R.id.like_button)
         skipButton = findViewById(R.id.skip_button)
         likeButton.setOnClickListener {
-            adapter.removeTopItem()
+            like()
         }
         skipButton.setOnClickListener {
-            adapter.removeTopItem()
+            skip()
         }
         val layoutManager = SwipeableLayoutManager()
         layoutManager.setAngle(10)
@@ -67,9 +67,7 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
 
     override fun onItemSwipedRight() {
         Timber.e("onItemSwipedRight")
-        val newsFeedItem = adapter.getTopItem() ?: return
-        likeSubject.onNext(newsFeedItem)
-        handleSwipe()
+        like()
     }
 
     override fun onItemSwipedDown() {
@@ -82,9 +80,7 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
 
     override fun onItemSwipedLeft() {
         Timber.e("onItemSwipedLeft")
-        val newsFeedItem = adapter.getTopItem() ?: return
-        skipSubject.onNext(newsFeedItem)
-        handleSwipe()
+        skip()
     }
 
     override fun needUpdateIntent(): Observable<String> {
@@ -112,7 +108,19 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
         super.onDestroy()
     }
 
-    private fun handleSwipe() {
+    private fun like() {
+        //val newsFeedItem = adapter.getTopItem() ?: return
+        //likeSubject.onNext(newsFeedItem)
+        handleRemove()
+    }
+
+    private fun skip() {
+        //val newsFeedItem = adapter.getTopItem() ?: return
+        //skipSubject.onNext(newsFeedItem)
+        handleRemove()
+    }
+
+    private fun handleRemove() {
         adapter.removeTopItem()
         if (adapter.itemCount < MIN_COUNT_TO_UPDATE) {
             needUpdateSubject.onNext(adapter.getNextFrom())

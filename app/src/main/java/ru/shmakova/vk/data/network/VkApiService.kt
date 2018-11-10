@@ -11,7 +11,7 @@ import ru.shmakova.vk.data.network.models.NewsFeedModel
 interface VkApiService {
     @GET("newsfeed.getDiscoverForContestant")
     fun getDiscoverForContestant(
-        @Query("count") count: Int = 30,
+        @Query("count") count: Int = 10,
         @Query("start_from") startFrom: String? = null,
         @Query("extended") extended: Int = 1,
         @Query("access_token") token: String,
