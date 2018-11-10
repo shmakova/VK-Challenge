@@ -27,6 +27,8 @@ class NewsCardView @JvmOverloads constructor(
     private val dateView: TextView
     private val photoView: ImageView
     private val textView: TextView
+    private val likeBadge: View
+    private val skipBadge: View
 
     init {
         inflate(context, R.layout.news_card_view, this)
@@ -35,29 +37,49 @@ class NewsCardView @JvmOverloads constructor(
         dateView = findViewById(R.id.date)
         photoView = findViewById(R.id.attachment)
         textView = findViewById(R.id.text)
+        likeBadge = findViewById(R.id.like_badge)
+        skipBadge = findViewById(R.id.skip_badge)
     }
 
-    fun setNewsFeedItem(newsItem: NewsFeedItem) {
+    fun showNewsFeedItem(newsItem: NewsFeedItem) {
         val profile = newsItem.profile
-        setAvatar(profile.avatar)
-        setName(profile.name)
-        setDate(newsItem.date)
-        setAttachments(newsItem.attachments)
-        setText(newsItem.text)
+        showAvatar(profile.avatar)
+        showName(profile.name)
+        showDate(newsItem.date)
+        showAttachments(newsItem.attachments)
+        showText(newsItem.text)
+        hideLikeBadge()
+        hideSkipBadge()
     }
 
-    private fun setAvatar(url: String) {
+    fun showLikeBadge() {
+        likeBadge.visibility = View.VISIBLE
+    }
+
+    fun hideLikeBadge() {
+        likeBadge.visibility = View.GONE
+    }
+
+    fun showSkipBadge() {
+        skipBadge.visibility = View.VISIBLE
+    }
+
+    fun hideSkipBadge() {
+        skipBadge.visibility = View.GONE
+    }
+
+    private fun showAvatar(url: String) {
         Glide.with(this)
             .load(url)
             .apply(RequestOptions.circleCropTransform())
             .into(avatarView)
     }
 
-    private fun setName(name: String) {
+    private fun showName(name: String) {
         nameView.text = name
     }
 
-    private fun setDate(date: Date) {
+    private fun showDate(date: Date) {
         dateView.text = resources.getString(
             R.string.news_card_date,
             FormatUtils.getRelativeDayFromDate(date),
@@ -65,7 +87,7 @@ class NewsCardView @JvmOverloads constructor(
         )
     }
 
-    private fun setAttachments(attachments: List<Attachment>) {
+    private fun showAttachments(attachments: List<Attachment>) {
         val photo = attachments.firstOrNull()
         if (photo == null) {
             photoView.visibility = GONE
@@ -78,7 +100,7 @@ class NewsCardView @JvmOverloads constructor(
         }
     }
 
-    private fun setText(text: String) {
+    private fun showText(text: String) {
         if (text.isEmpty()) {
             textView.visibility = View.GONE
         } else {

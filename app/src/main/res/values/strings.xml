@@ -6,4 +6,6 @@
     <string name="avatar">Аватарка</string>
     <string name="photo">Фотография</string>
     <string name="news_card_date">%1$s в %2$s</string>
+    <string name="like_badge_text">Мне нравится</string>
+    <string name="skip_badge_text">Пропустить</string>
 </resources>

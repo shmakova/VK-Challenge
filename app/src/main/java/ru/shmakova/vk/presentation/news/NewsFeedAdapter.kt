@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import ru.shmakova.vk.R
 import ru.shmakova.vk.domain.models.NewsFeed
+import swipeable.com.layoutmanager.OnItemSwipePercentageListener
 
 class NewsFeedAdapter : RecyclerView.Adapter<NewsViewHolder>() {
+
     private var newsFeed: NewsFeed = NewsFeed(nextFrom = "", items = mutableListOf())
 
     override fun onCreateViewHolder(
@@ -22,7 +24,7 @@ class NewsFeedAdapter : RecyclerView.Adapter<NewsViewHolder>() {
     )
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        holder.newsCardView.setNewsFeedItem(newsFeed.items[position])
+        holder.newsCardView.showNewsFeedItem(newsFeed.items[position])
     }
 
     override fun getItemCount() = newsFeed.items.size
@@ -43,6 +45,20 @@ class NewsFeedAdapter : RecyclerView.Adapter<NewsViewHolder>() {
     }
 }
 
-class NewsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class NewsViewHolder(view: View) : RecyclerView.ViewHolder(view), OnItemSwipePercentageListener {
+
     val newsCardView: NewsCardView = view.findViewById(R.id.news_card)
+
+    override fun onItemSwipePercentage(percentage: Double) {
+        if (percentage > 0) {
+            newsCardView.showLikeBadge()
+            newsCardView.hideSkipBadge()
+        } else if (percentage < 0) {
+            newsCardView.showSkipBadge()
+            newsCardView.hideLikeBadge()
+        } else {
+            newsCardView.hideLikeBadge()
+            newsCardView.hideSkipBadge()
+        }
+    }
 }

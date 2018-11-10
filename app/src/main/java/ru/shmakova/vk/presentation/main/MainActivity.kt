@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
     private lateinit var skipButton: ImageView
     private val adapter = NewsFeedAdapter()
 
-    private val swipableTouchHelperCallback = SwipeableTouchHelperCallback(this)
+    private val swipeableTouchHelperCallback = SwipeableTouchHelperCallback(this)
 
     private val needUpdateSubject: PublishSubject<String> = PublishSubject.create()
     private val likeSubject: PublishSubject<NewsFeedItem> = PublishSubject.create()
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
             .setMaxShowCount(3)
             .setScaleGap(0.25f)
             .setTransYGap(0)
-        val itemTouchHelper = ItemTouchHelper(swipableTouchHelperCallback)
+        val itemTouchHelper = ItemTouchHelper(swipeableTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(newsFeedStackView)
         newsFeedStackView.layoutManager = layoutManager
         newsFeedStackView.adapter = adapter
