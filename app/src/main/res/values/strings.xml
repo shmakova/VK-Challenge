@@ -8,4 +8,6 @@
     <string name="news_card_date">%1$s в %2$s</string>
     <string name="like_badge_text">Мне нравится</string>
     <string name="skip_badge_text">Пропустить</string>
+    <string name="retry_button_text">Повторить</string>
+    <string name="internet_connection_error">Проблемы с интернет-соединением</string>
 </resources>

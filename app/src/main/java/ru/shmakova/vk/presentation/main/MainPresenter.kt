@@ -17,10 +17,12 @@ class MainPresenter @Inject constructor(private val mainInteractor: MainInteract
     }
 
     private fun bindIntents() {
-        val newsFeedIntent: Observable<PartialMainViewState> = view().needUpdateIntent()
-            .distinctUntilChanged()
-            .doOnNext { Timber.i("Get news feed for %s", it) }
-            .flatMap { mainInteractor.getNewsFeed(it) }
+        val newsFeedIntent: Observable<PartialMainViewState> =
+            Observable.merge(
+                view().needUpdateIntent().distinctUntilChanged(),
+                view().retryClickIntent().map { "" })
+                .doOnNext { Timber.i("Get news feed for %s", it) }
+                .flatMap { mainInteractor.getNewsFeed(it) }
 
         val likeIntent: Observable<PartialMainViewState> = view().likeIntent()
             .distinctUntilChanged()

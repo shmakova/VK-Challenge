@@ -40,8 +40,10 @@ class NewsFeedAdapter : RecyclerView.Adapter<NewsViewHolder>() {
     }
 
     fun removeTopItem() {
-        newsFeed.items.removeAt(0)
-        notifyDataSetChanged()
+        if (itemCount > 0) {
+            newsFeed.items.removeAt(0)
+            notifyDataSetChanged()
+        }
     }
 }
 

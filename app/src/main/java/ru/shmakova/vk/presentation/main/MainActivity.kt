@@ -3,7 +3,11 @@ package ru.shmakova.vk.presentation.main
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
+import android.view.View
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
+import com.jakewharton.rxbinding2.view.RxView
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -23,6 +27,9 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
     private lateinit var newsFeedStackView: RecyclerView
     private lateinit var likeButton: ImageView
     private lateinit var skipButton: ImageView
+    private lateinit var loadingView: View
+    private lateinit var retryButton: Button
+    private lateinit var errorTextView: TextView
     private val adapter = NewsFeedAdapter()
 
     private val swipeableTouchHelperCallback = SwipeableTouchHelperCallback(this)
@@ -41,6 +48,9 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
         newsFeedStackView = findViewById(R.id.news_feed_stack_view)
         likeButton = findViewById(R.id.like_button)
         skipButton = findViewById(R.id.skip_button)
+        loadingView = findViewById(R.id.loading_view)
+        retryButton = findViewById(R.id.retry_button)
+        errorTextView = findViewById(R.id.error)
         likeButton.setOnClickListener {
             like()
         }
@@ -95,11 +105,23 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
         return likeSubject
     }
 
+    override fun retryClickIntent(): Observable<Any> {
+        return RxView.clicks(retryButton)
+    }
+
     override fun render(state: MainViewState) {
         Timber.e("Render state: %s", state)
         if (state.newsFeed != null) {
+            loadingView.visibility = View.GONE
+            errorTextView.visibility = View.GONE
+            retryButton.visibility = View.GONE
             adapter.appendNewsFeed(state.newsFeed)
             adapter.notifyDataSetChanged()
+        } else if (state.error != null) {
+            loadingView.visibility = View.GONE
+            errorTextView.setText(R.string.internet_connection_error)
+            errorTextView.visibility = View.VISIBLE
+            retryButton.visibility = View.VISIBLE
         }
     }
 

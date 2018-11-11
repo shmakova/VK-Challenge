@@ -10,5 +10,7 @@ interface MainView {
 
     fun skipIntent(): Observable<NewsFeedItem>
 
+    fun retryClickIntent(): Observable<Any>
+
     fun render(state: MainViewState)
 }
