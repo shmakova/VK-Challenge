@@ -141,8 +141,6 @@ class NewsCardView @JvmOverloads constructor(
                     return true
                 }
             })
-        textView.post {
-            textView.invalidate()
-        }
+        textView.post { textView.invalidate() }
     }
 }

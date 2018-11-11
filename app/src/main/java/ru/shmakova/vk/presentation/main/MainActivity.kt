@@ -122,14 +122,14 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
     }
 
     private fun like() {
-        //val newsFeedItem = adapter.getTopItem() ?: return
-        //likeSubject.onNext(newsFeedItem)
+        val newsFeedItem = adapter.getTopItem() ?: return
+        likeSubject.onNext(newsFeedItem)
         handleRemove()
     }
 
     private fun skip() {
-        //val newsFeedItem = adapter.getTopItem() ?: return
-        //skipSubject.onNext(newsFeedItem)
+        val newsFeedItem = adapter.getTopItem() ?: return
+        skipSubject.onNext(newsFeedItem)
         handleRemove()
     }
 
