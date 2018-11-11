@@ -6,7 +6,7 @@
     <color name="color_accent">#FF3347</color>
     <color name="white">#FFFFFF</color>
     <color name="default_text_color">#000000</color>
-    <color name="gray_text_color">#818C99</color>
+    <color name="date_text_color">#818C99</color>
     <color name="page_indicator_selected_color">#ffffff</color>
     <color name="page_indicator_unselected_color">#1effffff</color>
 </resources>

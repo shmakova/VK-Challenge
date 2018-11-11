@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">VKinder</string>
     <string name="login_button_text">Логин</string>
-    <string name="like">Лайк</string>
-    <string name="skip">Пропустить</string>
-    <string name="avatar">Аватарка</string>
-    <string name="photo">Фотография</string>
+    <string name="like_content_description">Лайк</string>
+    <string name="skip_content_description">Пропустить</string>
+    <string name="avatar_content_description">Аватарка</string>
+    <string name="photo_content_description">Фотография</string>
     <string name="news_card_date">%1$s в %2$s</string>
     <string name="like_badge_text">Мне нравится</string>
     <string name="skip_badge_text">Пропустить</string>
