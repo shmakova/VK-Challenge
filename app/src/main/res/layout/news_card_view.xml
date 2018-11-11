@@ -64,6 +64,23 @@
         app:layout_constraintTop_toBottomOf="@+id/avatar"
         tools:src="@drawable/ic_like_36" />
 
+    <ru.shmakova.vk.presentation.ui.LinePageIndicator
+        android:id="@+id/line_page_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:elevation="2dp"
+        android:transitionName="page_indicator_transition"
+        app:gapWidth="4dp"
+        app:layout_constraintEnd_toEndOf="@+id/attachments_block"
+        app:layout_constraintStart_toStartOf="@+id/attachments_block"
+        app:layout_constraintTop_toTopOf="@+id/attachments_block"
+        app:selectedColor="@color/page_indicator_selected_color"
+        app:strokeWidth="2dp"
+        app:unselectedColor="@color/page_indicator_unselected_color" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/attachments"
         android:layout_width="match_parent"
@@ -95,6 +112,7 @@
         android:layout_height="88dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/bg_button_like_elevation16"
+        android:elevation="4dp"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
         android:rotation="-4"
@@ -110,6 +128,7 @@
         android:layout_height="88dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/bg_button_skip_elevation16"
+        android:elevation="4dp"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
         android:rotation="4"

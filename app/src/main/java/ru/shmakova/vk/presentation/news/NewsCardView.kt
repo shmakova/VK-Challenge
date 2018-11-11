@@ -13,21 +13,22 @@ import com.bumptech.glide.request.RequestOptions
 import ru.shmakova.vk.R
 import ru.shmakova.vk.domain.models.Attachment
 import ru.shmakova.vk.domain.models.NewsFeedItem
+import ru.shmakova.vk.presentation.ui.LinePageIndicator
 import ru.shmakova.vk.presentation.utils.FormatUtils
 import java.util.*
-
 
 class NewsCardView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr), ViewPager.OnPageChangeListener {
 
     private val avatarView: ImageView
     private val nameView: TextView
     private val dateView: TextView
     private val attachmentsViewPager: ViewPager
     private val attachmentsView: View
+    private val linePageIndicator: LinePageIndicator
     private val textView: TextView
     private val likeBadge: View
     private val skipBadge: View
@@ -41,6 +42,7 @@ class NewsCardView @JvmOverloads constructor(
         dateView = findViewById(R.id.date)
         attachmentsView = findViewById(R.id.attachments_block)
         attachmentsViewPager = findViewById(R.id.attachments)
+        linePageIndicator = findViewById(R.id.line_page_indicator)
         textView = findViewById(R.id.text)
         likeBadge = findViewById(R.id.like_badge)
         skipBadge = findViewById(R.id.skip_badge)
@@ -48,6 +50,18 @@ class NewsCardView @JvmOverloads constructor(
         nextButton = findViewById(R.id.next_button)
         nextButton.setOnClickListener { attachmentsViewPager.arrowScroll(View.FOCUS_RIGHT) }
         prevButton.setOnClickListener { attachmentsViewPager.arrowScroll(View.FOCUS_LEFT) }
+    }
+
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+        // No op
+    }
+
+    override fun onPageSelected(position: Int) {
+        linePageIndicator.onPageSelected(position)
+    }
+
+    override fun onPageScrollStateChanged(state: Int) {
+        // No op
     }
 
     fun showNewsFeedItem(newsItem: NewsFeedItem) {
@@ -97,6 +111,8 @@ class NewsCardView @JvmOverloads constructor(
     }
 
     private fun showAttachments(attachments: List<Attachment>) {
+        attachmentsViewPager.removeOnPageChangeListener(this)
+        attachmentsViewPager.addOnPageChangeListener(this)
         if (attachments.isEmpty()) {
             attachmentsViewPager.visibility = GONE
             attachmentsView.visibility = GONE
@@ -104,6 +120,13 @@ class NewsCardView @JvmOverloads constructor(
             attachmentsViewPager.visibility = VISIBLE
             attachmentsView.visibility = VISIBLE
         }
+        if (attachments.size > 1) {
+            linePageIndicator.visibility = VISIBLE
+        } else {
+            linePageIndicator.visibility = View.GONE
+        }
+        linePageIndicator.setItemsCount(attachments.size)
+        linePageIndicator.onPageSelected(0)
         attachmentsViewPager.adapter = NewsAttachmentsViewPagerAdapter(attachments)
     }
 
