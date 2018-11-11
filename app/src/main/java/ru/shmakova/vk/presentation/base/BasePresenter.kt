@@ -5,7 +5,7 @@ import android.support.annotation.CallSuper
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-abstract class BasePresenter<V : Any>(private val viewClass: Class<V>) {
+open class BasePresenter<V : Any> {
 
     private val subscriptionsToUnsubscribeOnUnbindView = CompositeDisposable()
 
@@ -23,9 +23,7 @@ abstract class BasePresenter<V : Any>(private val viewClass: Class<V>) {
         this.view = view
     }
 
-    protected fun view(): V {
-        return checkNotNull(view) { "You should bind before accessing view!!" }
-    }
+    protected fun view(): V = checkNotNull(view) { "You should bind before accessing view!!" }
 
     protected fun unsubscribeOnUnbindView(disposable: Disposable, vararg disposables: Disposable) {
         subscriptionsToUnsubscribeOnUnbindView.add(disposable)
@@ -49,7 +47,5 @@ abstract class BasePresenter<V : Any>(private val viewClass: Class<V>) {
         subscriptionsToUnsubscribeOnUnbindView.clear()
     }
 
-    fun isViewBound(view: V): Boolean {
-        return this.view === view
-    }
+    fun isViewBound(view: V): Boolean = this.view === view
 }

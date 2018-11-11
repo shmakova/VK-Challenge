@@ -27,11 +27,7 @@ class NewsAttachmentsViewPagerAdapter constructor(private val attachments: List<
         container.removeView(obj as View)
     }
 
-    override fun isViewFromObject(view: View, obj: Any): Boolean {
-        return view == obj
-    }
+    override fun isViewFromObject(view: View, obj: Any): Boolean = view == obj
 
-    override fun getCount(): Int {
-        return attachments.size
-    }
+    override fun getCount(): Int = attachments.size
 }

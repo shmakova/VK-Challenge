@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewConfiguration
 import ru.shmakova.vk.R
 
-
 class LinePageIndicator
 @JvmOverloads constructor(
     context: Context,
@@ -28,6 +27,7 @@ class LinePageIndicator
     private var mGapWidth: Float = 0.toFloat()
     private var mItemsCount: Int = 0
     private var mTouchSlop: Int = 0
+    private var mRadius: Float = 0.toFloat()
 
     private lateinit var metrics: DisplayMetrics
 
@@ -90,6 +90,7 @@ class LinePageIndicator
             val a =
                 context.obtainStyledAttributes(attrs, R.styleable.LinePageIndicator, defStyle, 0)
 
+            mRadius = res.getDimension(R.dimen.default_line_indicator_radius)
             mCentered = a.getBoolean(R.styleable.LinePageIndicator_centered, defaultCentered)
             mLineWidth = a.getDimension(R.styleable.LinePageIndicator_lineWidth, defaultLineWidth)
             mGapWidth = a.getDimension(R.styleable.LinePageIndicator_gapWidth, defaultGapWidth)
@@ -149,8 +150,8 @@ class LinePageIndicator
                 verticalOffset,
                 dx2,
                 verticalOffset + strokeWidth,
-                12f,
-                12f,
+                mRadius,
+                mRadius,
                 if (i == mCurrentPage) mPaintSelected else mPaintUnselected
             )
         }

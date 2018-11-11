@@ -6,6 +6,7 @@ import ru.shmakova.vk.domain.models.NewsFeed
 import ru.shmakova.vk.domain.models.NewsFeedItem
 import ru.shmakova.vk.domain.models.Profile
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 fun NewsFeedModel.toNewsFeed(): NewsFeed {
     val newsFeedItems = mutableListOf<NewsFeedItem>()
@@ -47,7 +48,7 @@ fun NewsFeedModel.toNewsFeed(): NewsFeed {
                     type = it.type,
                     sourceId = it.sourceId,
                     postId = it.postId,
-                    date = Date(it.date * 1000L),
+                    date = Date(TimeUnit.SECONDS.toMillis(it.date)),
                     text = it.text,
                     attachments = attachments
                 )

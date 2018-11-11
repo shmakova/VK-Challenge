@@ -35,3 +35,5 @@ complexity:
     active: false
   TooManyFunctions:
     active: false
+  LabeledExpression:
+    active: false

@@ -14,23 +14,19 @@ internal object OkHttpInterceptorsModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-    }
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
+        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
     @Provides
     @OkHttpInterceptors
     @Singleton
     @JvmStatic
-    fun provideOkHttpInterceptors(httpLoggingInterceptor: HttpLoggingInterceptor): List<Interceptor> {
-        return listOf(httpLoggingInterceptor)
-    }
+    fun provideOkHttpInterceptors(httpLoggingInterceptor: HttpLoggingInterceptor): List<Interceptor> =
+        listOf(httpLoggingInterceptor)
 
     @Provides
     @OkHttpNetworkInterceptors
     @Singleton
     @JvmStatic
-    fun provideOkHttpNetworkInterceptors(): List<Interceptor> {
-        return listOf(StethoInterceptor())
-    }
+    fun provideOkHttpNetInterceptors(): List<Interceptor> = listOf(StethoInterceptor())
 }

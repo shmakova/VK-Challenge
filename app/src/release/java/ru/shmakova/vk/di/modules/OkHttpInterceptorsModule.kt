@@ -8,23 +8,17 @@ import okhttp3.Interceptor
 import ru.shmakova.vk.di.annotations.OkHttpInterceptors
 import ru.shmakova.vk.di.annotations.OkHttpNetworkInterceptors
 
-import java.util.Collections.unmodifiableList
-
 @Module
 internal object OkHttpInterceptorsModule {
     @Provides
     @OkHttpInterceptors
     @Singleton
     @JvmStatic
-    fun provideOkHttpInterceptors(): List<Interceptor> {
-        return emptyList()
-    }
+    fun provideOkHttpInterceptors(): List<Interceptor> = emptyList()
 
     @Provides
     @OkHttpNetworkInterceptors
     @Singleton
     @JvmStatic
-    fun provideOkHttpNetworkInterceptors(): List<Interceptor> {
-        return emptyList()
-    }
+    fun provideOkHttpNetInterceptors(): List<Interceptor> = emptyList()
 }

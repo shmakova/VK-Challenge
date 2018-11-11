@@ -21,7 +21,6 @@ import swipeable.com.layoutmanager.touchelper.ItemTouchHelper
 import timber.log.Timber
 import javax.inject.Inject
 
-
 class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
 
     private lateinit var newsFeedStackView: RecyclerView
@@ -58,10 +57,10 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
             skip()
         }
         val layoutManager = SwipeableLayoutManager()
-        layoutManager.setAngle(10)
-            .setAnimationDuratuion(300)
-            .setMaxShowCount(3)
-            .setScaleGap(0.25f)
+        layoutManager.setAngle(DEFAULT_ANGLE)
+            .setAnimationDuratuion(DEFAULT_ANIMATION_DURATION)
+            .setMaxShowCount(MAX_SHOW_COUNT)
+            .setScaleGap(SCALE_GAP)
             .setTransYGap(0)
         val itemTouchHelper = ItemTouchHelper(swipeableTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(newsFeedStackView)
@@ -93,21 +92,13 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
         skip()
     }
 
-    override fun needUpdateIntent(): Observable<String> {
-        return needUpdateSubject
-    }
+    override fun needUpdateIntent(): Observable<String> = needUpdateSubject
 
-    override fun skipIntent(): Observable<NewsFeedItem> {
-        return skipSubject
-    }
+    override fun skipIntent(): Observable<NewsFeedItem> = skipSubject
 
-    override fun likeIntent(): Observable<NewsFeedItem> {
-        return likeSubject
-    }
+    override fun likeIntent(): Observable<NewsFeedItem> = likeSubject
 
-    override fun retryClickIntent(): Observable<Any> {
-        return RxView.clicks(retryButton)
-    }
+    override fun retryClickIntent(): Observable<Any> = RxView.clicks(retryButton)
 
     override fun render(state: MainViewState) {
         Timber.e("Render state: %s", state)
@@ -151,3 +142,7 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
 }
 
 private const val MIN_COUNT_TO_UPDATE = 5
+private const val DEFAULT_ANGLE = 10
+private const val DEFAULT_ANIMATION_DURATION = 300L
+private const val MAX_SHOW_COUNT = 3
+private const val SCALE_GAP = 0.25f

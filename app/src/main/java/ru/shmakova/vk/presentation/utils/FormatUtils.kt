@@ -16,7 +16,7 @@ object FormatUtils {
     }
 
     fun getRelativeDayFromDate(date: Date): String {
-        val flags = (DateUtils.FORMAT_ABBREV_WEEKDAY or FORMAT_SHOW_DATE or FORMAT_ABBREV_MONTH)
+        val flags = DateUtils.FORMAT_ABBREV_WEEKDAY or FORMAT_SHOW_DATE or FORMAT_ABBREV_MONTH
         return DateUtils.getRelativeTimeSpanString(
             date.time,
             System.currentTimeMillis(),

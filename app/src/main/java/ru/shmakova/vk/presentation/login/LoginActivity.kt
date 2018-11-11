@@ -13,7 +13,6 @@ import ru.shmakova.vk.R
 import ru.shmakova.vk.presentation.main.MainActivity
 import timber.log.Timber
 
-
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginButton: Button

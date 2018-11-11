@@ -29,9 +29,7 @@ class App : Application(), HasActivityInjector {
         appComponent.inject(this)
     }
 
-    override fun activityInjector(): AndroidInjector<Activity> {
-        return dispatchingAndroidInjector
-    }
+    override fun activityInjector(): AndroidInjector<Activity> = dispatchingAndroidInjector
 
     private fun initLogger() {
         if (BuildConfig.DEBUG) {

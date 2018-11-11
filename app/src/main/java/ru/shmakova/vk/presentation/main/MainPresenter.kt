@@ -9,7 +9,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(private val mainInteractor: MainInteractor) :
-    BasePresenter<MainView>(MainView::class.java) {
+    BasePresenter<MainView>() {
 
     override fun bindView(view: MainView) {
         super.bindView(view)
@@ -68,9 +68,7 @@ class MainPresenter @Inject constructor(private val mainInteractor: MainInteract
                 error = null,
                 newsFeed = partialChanges.newsFeed
             )
-            else -> {
-                previousState
-            }
+            else -> previousState
         }
     }
 }

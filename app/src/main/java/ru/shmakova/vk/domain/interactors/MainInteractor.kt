@@ -17,7 +17,7 @@ class MainInteractor @Inject constructor(
             token = VKAccessToken.currentToken().accessToken,
             startFrom = if (nextFrom.isEmpty()) null else nextFrom
         ).toObservable()
-            .map { it -> it.toNewsFeed() }
+            .map { it.toNewsFeed() }
             .subscribeOn(Schedulers.io())
             .map<PartialMainViewState> { PartialMainViewState.NewsFeedState(it) }
             .startWith(PartialMainViewState.LoadingState)
