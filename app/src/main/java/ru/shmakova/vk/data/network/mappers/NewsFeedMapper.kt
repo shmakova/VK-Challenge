@@ -39,6 +39,10 @@ fun NewsFeedModel.toNewsFeed(): NewsFeed {
             if (url != null) {
                 attachments.add(Attachment(type = it.type, url = url))
             }
+            val videoUrl = it.video?.url
+            if (videoUrl != null) {
+                attachments.add(Attachment(type = it.type, url = videoUrl))
+            }
         }
         val profile = profileMap[Math.abs(it.sourceId)]
         if (profile != null) {

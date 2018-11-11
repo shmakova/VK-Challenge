@@ -29,12 +29,18 @@ data class NewsFeedItemResponse(
 @JsonClass(generateAdapter = true)
 data class NewsFeedAttachment(
     val type: String,
-    val photo: NewsFeedAttachmentPhoto?
+    val photo: NewsFeedAttachmentPhoto?,
+    val video: NewsFeedAttachmentVideo?
 )
 
 @JsonClass(generateAdapter = true)
 data class NewsFeedAttachmentPhoto(
     val sizes: List<NewsFeedAttachmentPhotoSize>
+)
+
+@JsonClass(generateAdapter = true)
+data class NewsFeedAttachmentVideo(
+    @Json(name = "photo_320") val url: String
 )
 
 @JsonClass(generateAdapter = true)
