@@ -95,15 +95,12 @@ class NewsCardView @JvmOverloads constructor(
             photoView.visibility = View.VISIBLE
             Glide.with(this)
                 .load(photo.url)
-                .apply(RequestOptions.centerCropTransform())
                 .into(photoView)
         }
     }
 
     private fun showText(text: String) {
-        if (text.isEmpty()) {
-            textView.visibility = View.GONE
-        } else {
+        if (!text.isEmpty()) {
             textView.visibility = View.VISIBLE
             textView.text = text
             textView.viewTreeObserver.addOnPreDrawListener(
