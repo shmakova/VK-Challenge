@@ -2,6 +2,7 @@ package ru.shmakova.vk.presentation.news
 
 import android.content.Context
 import android.support.constraint.ConstraintLayout
+import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewTreeObserver
@@ -25,20 +26,28 @@ class NewsCardView @JvmOverloads constructor(
     private val avatarView: ImageView
     private val nameView: TextView
     private val dateView: TextView
-    private val photoView: ImageView
+    private val attachmentsViewPager: ViewPager
+    private val attachmentsView: View
     private val textView: TextView
     private val likeBadge: View
     private val skipBadge: View
+    private val prevButton: View
+    private val nextButton: View
 
     init {
         inflate(context, R.layout.news_card_view, this)
         avatarView = findViewById(R.id.avatar)
         nameView = findViewById(R.id.name)
         dateView = findViewById(R.id.date)
-        photoView = findViewById(R.id.attachment)
+        attachmentsView = findViewById(R.id.attachments_block)
+        attachmentsViewPager = findViewById(R.id.attachments)
         textView = findViewById(R.id.text)
         likeBadge = findViewById(R.id.like_badge)
         skipBadge = findViewById(R.id.skip_badge)
+        prevButton = findViewById(R.id.prev_button)
+        nextButton = findViewById(R.id.next_button)
+        nextButton.setOnClickListener { attachmentsViewPager.arrowScroll(View.FOCUS_RIGHT) }
+        prevButton.setOnClickListener { attachmentsViewPager.arrowScroll(View.FOCUS_LEFT) }
     }
 
     fun showNewsFeedItem(newsItem: NewsFeedItem) {
@@ -53,19 +62,19 @@ class NewsCardView @JvmOverloads constructor(
     }
 
     fun showLikeBadge() {
-        likeBadge.visibility = View.VISIBLE
+        likeBadge.visibility = VISIBLE
     }
 
     fun hideLikeBadge() {
-        likeBadge.visibility = View.GONE
+        likeBadge.visibility = GONE
     }
 
     fun showSkipBadge() {
-        skipBadge.visibility = View.VISIBLE
+        skipBadge.visibility = VISIBLE
     }
 
     fun hideSkipBadge() {
-        skipBadge.visibility = View.GONE
+        skipBadge.visibility = GONE
     }
 
     private fun showAvatar(url: String) {
@@ -88,30 +97,29 @@ class NewsCardView @JvmOverloads constructor(
     }
 
     private fun showAttachments(attachments: List<Attachment>) {
-        val photo = attachments.firstOrNull()
-        if (photo == null) {
-            photoView.visibility = GONE
+        if (attachments.isEmpty()) {
+            attachmentsViewPager.visibility = GONE
+            attachmentsView.visibility = GONE
         } else {
-            photoView.visibility = View.VISIBLE
-            Glide.with(this)
-                .load(photo.url)
-                .into(photoView)
+            attachmentsViewPager.visibility = VISIBLE
+            attachmentsView.visibility = VISIBLE
         }
+        attachmentsViewPager.adapter = NewsAttachmentsViewPagerAdapter(attachments)
     }
 
     private fun showText(text: String) {
-        if (!text.isEmpty()) {
-            textView.visibility = View.VISIBLE
-            textView.text = text
-            textView.viewTreeObserver.addOnPreDrawListener(
-                object : ViewTreeObserver.OnPreDrawListener {
-                    override fun onPreDraw(): Boolean {
-                        viewTreeObserver.removeOnPreDrawListener(this)
-                        val maxLines = textView.height / textView.lineHeight
-                        textView.maxLines = maxLines
-                        return true
-                    }
-                })
+        textView.text = text
+        textView.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    viewTreeObserver.removeOnPreDrawListener(this)
+                    val maxLines = textView.height / textView.lineHeight
+                    textView.maxLines = maxLines
+                    return true
+                }
+            })
+        textView.post {
+            textView.invalidate()
         }
     }
 }

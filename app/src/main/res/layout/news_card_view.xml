@@ -16,7 +16,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="12dp"
         android:contentDescription="@string/avatar"
-        app:layout_constraintBottom_toTopOf="@+id/attachment"
+        app:layout_constraintBottom_toTopOf="@+id/attachments_block"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/name"
         app:layout_constraintTop_toTopOf="parent"
@@ -51,8 +51,8 @@
         app:layout_constraintTop_toBottomOf="@+id/name"
         tools:text="09 Nov 2018" />
 
-    <ru.shmakova.vk.presentation.ui.SquareImageView
-        android:id="@+id/attachment"
+    <ru.shmakova.vk.presentation.ui.SquareView
+        android:id="@+id/attachments_block"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
@@ -63,6 +63,31 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/avatar"
         tools:src="@drawable/ic_like_36" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/attachments"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/attachments_block"
+        app:layout_constraintLeft_toLeftOf="@+id/attachments_block"
+        app:layout_constraintRight_toRightOf="@+id/attachments_block"
+        app:layout_constraintTop_toTopOf="@+id/attachments_block" />
+
+    <View
+        android:id="@+id/prev_button"
+        android:layout_width="75dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/attachments_block"
+        app:layout_constraintLeft_toLeftOf="@+id/attachments_block"
+        app:layout_constraintTop_toTopOf="@+id/attachments_block" />
+
+    <View
+        android:id="@+id/next_button"
+        android:layout_width="75dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/attachments_block"
+        app:layout_constraintRight_toRightOf="@+id/attachments_block"
+        app:layout_constraintTop_toTopOf="@+id/attachments_block" />
 
     <Button
         android:id="@+id/like_badge"
@@ -106,7 +131,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/avatar"
         app:layout_constraintRight_toRightOf="@+id/name"
-        app:layout_constraintTop_toBottomOf="@+id/attachment"
+        app:layout_constraintTop_toBottomOf="@+id/attachments_block"
         app:layout_constraintVertical_weight="1"
         tools:text="Ошибок не бывает. События, которые мы притягиваем в нашу жизнь, какими бы неприятными для нас они ни были, необходимы для того, чтобы мы научились тому, чему должны научиться. Каким бы ни был наш следующий шаг, он нужен для того, чтобы достичь того места, куда мы выбрали идти." />
 
