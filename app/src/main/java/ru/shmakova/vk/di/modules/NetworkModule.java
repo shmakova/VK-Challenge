@@ -2,8 +2,7 @@ package ru.shmakova.vk.di.modules;
 
 import android.support.annotation.NonNull;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.squareup.moshi.Moshi;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.moshi.MoshiConverterFactory;
 import ru.shmakova.vk.BuildConfig;
 import ru.shmakova.vk.data.network.VkApiService;
 import ru.shmakova.vk.di.annotations.OkHttpInterceptors;
@@ -44,8 +43,8 @@ public class NetworkModule {
     @Provides
     @NonNull
     @Singleton
-    static Gson provideGson() {
-        return new GsonBuilder().setLenient().create();
+    static Moshi provideMoshi() {
+        return new Moshi.Builder().build();
     }
 
     @Provides
@@ -58,11 +57,11 @@ public class NetworkModule {
     @NonNull
     @Provides
     @Singleton
-    static Retrofit provideRetrofit(@NonNull OkHttpClient okHttpClient, @NonNull Gson gson) {
+    static Retrofit provideRetrofit(@NonNull OkHttpClient okHttpClient, @NonNull Moshi moshi) {
         return new Retrofit.Builder()
                 .baseUrl(BuildConfig.API_BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .client(okHttpClient)
                 .validateEagerly(BuildConfig.DEBUG)
                 .build();
