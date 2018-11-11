@@ -71,24 +71,24 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
     }
 
     override fun onItemSwiped() {
-        Timber.e("onItemSwiped")
+        Timber.d("onItemSwiped")
     }
 
     override fun onItemSwipedRight() {
-        Timber.e("onItemSwipedRight")
+        Timber.d("onItemSwipedRight")
         like()
     }
 
     override fun onItemSwipedDown() {
-        Timber.e("onItemSwipedDown")
+        Timber.d("onItemSwipedDown")
     }
 
     override fun onItemSwipedUp() {
-        Timber.e("onItemSwipedUp")
+        Timber.d("onItemSwipedUp")
     }
 
     override fun onItemSwipedLeft() {
-        Timber.e("onItemSwipedLeft")
+        Timber.d("onItemSwipedLeft")
         skip()
     }
 
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity(), MainView, OnItemSwiped {
     override fun retryClickIntent(): Observable<Any> = RxView.clicks(retryButton)
 
     override fun render(state: MainViewState) {
-        Timber.e("Render state: %s", state)
+        Timber.d("Render state: %s", state)
         if (state.newsFeed != null) {
             loadingView.visibility = View.GONE
             errorTextView.visibility = View.GONE
